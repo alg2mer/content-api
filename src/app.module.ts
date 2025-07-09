@@ -7,6 +7,7 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { AuthModule } from './auth/auth.module';
 import { ContentModule } from './content/content.module';
 import { Content } from './content/entities/content.entity';
+import { DiscoveryModule } from './discovery/discovery.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { Content } from './content/entities/content.entity';
     UsersModule,
     PermissionsModule,
     AuthModule,
-    ContentModule
+    ContentModule,
+    DiscoveryModule
   ],
 })
 export class AppModule {}
