@@ -4,6 +4,7 @@ import { User } from './users/user.entity';
 import { Permission } from './permissions/permission.entity';
 import { UsersModule } from './users/users.module';
 import { PermissionsModule } from './permissions/permissions.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PermissionsModule } from './permissions/permissions.module';
     TypeOrmModule.forFeature([User, Permission]),
     UsersModule,
     PermissionsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
