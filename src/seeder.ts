@@ -8,11 +8,15 @@ export const seed = async (dataSource: DataSource) => {
   const userRepo = dataSource.getRepository(User);
 
   const permissions = [
+    'VIEW_CONTENT',
     'CREATE_CONTENT',
     'EDIT_CONTENT',
     'DELETE_CONTENT',
+
     'VIEW_USERS',
     'EDIT_USERS',
+    // Users crud permissions, ...etc
+
     'MANAGE_PERMISSIONS',
   ];
 

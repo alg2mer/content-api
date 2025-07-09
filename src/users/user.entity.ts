@@ -4,8 +4,10 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Permission } from '../permissions/permission.entity';
+import { Content } from 'src/content/entities/content.entity';
 
 @Entity()
 export class User {
@@ -21,4 +23,8 @@ export class User {
   @ManyToMany(() => Permission, { eager: true })
   @JoinTable()
   permissions: Permission[];
+
+  @OneToMany(() => Content, (content) => content.createdBy)
+  createdContent: Content[];
+
 }
