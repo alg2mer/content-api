@@ -1,17 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Content } from '../content/entities/content.entity';
 import { Repository } from 'typeorm';
 import { SearchContentDto } from './dto/search-content.dto';
+import { Cache } from 'cache-manager';
+import * as crypto from 'crypto';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class DiscoveryService {
   constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectRepository(Content)
     private contentRepo: Repository<Content>,
   ) {}
 
   async search(dto: SearchContentDto) {
+    const cacheKey = this.generateCacheKey(dto);
+    const cached = await this.cacheManager.get(cacheKey);
+
+    if (cached) {
+      return cached;
+    }
+
     const {
       keyword,
       type,
@@ -45,12 +56,27 @@ export class DiscoveryService {
 
     const [data, total] = await query.getManyAndCount();
 
-    return {
+    const result = {
       data,
       total,
       page,
       limit,
       lastPage: Math.ceil(total / limit),
+      cachedAt: new Date().toISOString(),
     };
+
+    // Cache the result for 60 seconds
+    await this.cacheManager.set(cacheKey, result, 60);
+
+    return result;
+  }
+
+  private generateCacheKey(dto: SearchContentDto): string {
+    const hash = crypto
+      .createHash('sha1')
+      .update(JSON.stringify(dto))
+      .digest('hex');
+
+    return `search:${hash}`;
   }
 }

@@ -8,11 +8,21 @@ import { AuthModule } from './auth/auth.module';
 import { ContentModule } from './content/content.module';
 import { Content } from './content/entities/content.entity';
 import { DiscoveryModule } from './discovery/discovery.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-ioredis-yet';
 
 @Module({
   imports: [
+    CacheModule.registerAsync({
+      useFactory: () => ({
+        store: redisStore,
+        host: 'localhost',
+        port: 6379,
+        ttl: 60, // sec
+      }),
+    }),
     TypeOrmModule.forRoot({
-      type: 'postgres', // or 'mysql'
+      type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'admin',
@@ -29,4 +39,4 @@ import { DiscoveryModule } from './discovery/discovery.module';
     DiscoveryModule
   ],
 })
-export class AppModule {}
+export class AppModule { }
