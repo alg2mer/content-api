@@ -14,6 +14,7 @@ import * as redisStore from 'cache-manager-ioredis-yet';
 @Module({
   imports: [
     CacheModule.registerAsync({
+      isGlobal: true,
       useFactory: () => ({
         store: redisStore,
         host: '127.0.0.1',
