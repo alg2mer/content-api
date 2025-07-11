@@ -10,25 +10,27 @@ import { Content } from './content/entities/content.entity';
 import { DiscoveryModule } from './discovery/discovery.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-ioredis-yet';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: () => ({
         store: redisStore,
-        host: '127.0.0.1',
-        port: 6379,
-        ttl: 60,
+        host: process.env.REDIS_HOST,
+        port: Number(process.env.REDIS_PORT),
+        ttl: Number(process.env.REDIS_TTL),
       }),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'admin',
-      password: '123456',
-      database: 'content_api',
+      host: process.env.DATABASE_HOST,
+      port: Number(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [User, Permission, Content],
       synchronize: true, // Use only in development
     }),

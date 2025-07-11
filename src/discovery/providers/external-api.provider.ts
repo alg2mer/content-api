@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ContentProvider } from '../interfaces/content-provider.interface';
 import { SearchContentDto } from '../dto/search-content.dto';
-import { PaginatedResult } from 'src/discovery/interfaces/paginated-result.interface';
 import { Content } from 'src/content/entities/content.entity';
 import { firstValueFrom } from 'rxjs';
+import { PaginatedResultDto } from '../dto/paginated-result.dto';
 
 @Injectable()
 export class ExternalApiProvider implements ContentProvider {
@@ -12,7 +12,7 @@ export class ExternalApiProvider implements ContentProvider {
         private readonly httpService: HttpService,
     ) { }
 
-    async searchContent(input: SearchContentDto): Promise<PaginatedResult<Content>> {
+    async searchContent(input: SearchContentDto): Promise<PaginatedResultDto<Content>> {
         const params = {
             q: input.keyword || '',
             type: input.type,
