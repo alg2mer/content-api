@@ -16,9 +16,9 @@ import * as redisStore from 'cache-manager-ioredis-yet';
     CacheModule.registerAsync({
       useFactory: () => ({
         store: redisStore,
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 6379,
-        ttl: 60, // sec
+        ttl: 60,
       }),
     }),
     TypeOrmModule.forRoot({

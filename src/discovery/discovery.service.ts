@@ -18,6 +18,9 @@ export class DiscoveryService {
   async search(dto: SearchContentDto) {
     const cacheKey = this.generateCacheKey(dto);
     const cached = await this.cacheManager.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
 
     if (cached) {
       return cached;
@@ -62,10 +65,9 @@ export class DiscoveryService {
       page,
       limit,
       lastPage: Math.ceil(total / limit),
-      cachedAt: new Date().toISOString(),
+      fetchedAt: new Date().toISOString(),
     };
 
-    // Cache the result for 60 seconds
     await this.cacheManager.set(cacheKey, result, 60);
 
     return result;
