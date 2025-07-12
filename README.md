@@ -34,30 +34,41 @@ This project provides a scalable, modular, and well-documented API built with Ne
 
 ```bash
 git clone https://github.com/alg2mer/content-api.git
+
 cd content-api
+```
+
+**Install the project**
+
+```bash
 npm install
 ```
 
 ## Configuration
 
+```bash
+cp .env.example .env
+```
+
 Copy `.env.example` to `.env` and update your environment variables:
 
 ```ini
-DATABASE_USERNAME=root
-DATABASE_PASSWORD=password
-DATABASE_NAME=content_api
-DATABASE_HOST=localhost
+# PostgreSQL
+DATABASE_USERNAME=nestuser
+DATABASE_PASSWORD=nestpass
+DATABASE_NAME=nestdb
+DATABASE_HOST=postgres
 DATABASE_PORT=5432
 
-REDIS_HOST=localhost
+# Redis
+REDIS_HOST=redis
 REDIS_PORT=6379
-REDIS_TTL=60
+REDIS_TTL=60000
 
+# App
 JWT_SECRET=secret_for_jwt
-
 PORT=3000
 ```
-
 
 ## Running the Application
 
@@ -125,7 +136,6 @@ This documentation includes all available endpoints, request/response schemas, a
 
 ## Contact
 
-Mustafa Elsir — \[[mustafa@alg2mer.com](mailto:mustafa@alg2mer.com)]
+Mustafa Elsir — \[mustafa@alg2mer.com](mailto:mustafa@alg2mer.com)
 
 Project Link: [https://github.com/alg2mer/content-api](https://github.com/alg2mer/content-api)
-

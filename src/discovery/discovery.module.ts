@@ -15,9 +15,9 @@ import { HttpModule } from '@nestjs/axios';
     CacheModule.registerAsync({
       useFactory: async () => ({
         store: redisStore,
-        host: 'localhost',
-        port: 6379,
-        ttl: 60,
+        host: process.env.REDIS_HOST,
+        port: Number(process.env.REDIS_PORT),
+        ttl: Number(process.env.REDIS_TTL),
       }),
     }),
     HttpModule,
