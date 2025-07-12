@@ -3,7 +3,7 @@
 This project provides a scalable, modular, and well-documented API built with NestJS to support a Content Management System (CMS) and a Discovery service for searching content.
 
 
-## Features
+## 🚀 Features
 
 - **CMS Module**
   - Create, edit, and manage visible content.
@@ -19,40 +19,39 @@ This project provides a scalable, modular, and well-documented API built with Ne
   - Fully documented API with Swagger/OpenAPI.
   - Interactive API docs available at `/api/docs`.
 
-
-## Technologies
+## 🧰 Technologies
 
 - [NestJS](https://nestjs.com/)
-- [TypeORM](https://typeorm.io/) (with PostgreSQL or your preferred database)
+- [TypeORM](https://typeorm.io/) (with PostgreSQL)
 - [class-validator](https://github.com/typestack/class-validator)
 - [Swagger (OpenAPI)](https://swagger.io/)
+- Redis (for caching, session, and scalability)
 - JWT Authentication
 - Role-based Access Control (RBAC)
 
 
-## Installation
+## ⚙️ Installation (Manual)
 
 ```bash
 git clone https://github.com/alg2mer/content-api.git
-
 cd content-api
-```
+````
 
-**Install the project**
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-## Configuration
+### Configuration
 
 ```bash
 cp .env.example .env
 ```
 
-Copy `.env.example` to `.env` and update your environment variables:
+Update your `.env` file:
 
-```ini
+```env
 # PostgreSQL
 DATABASE_USERNAME=nestuser
 DATABASE_PASSWORD=nestpass
@@ -70,72 +69,87 @@ JWT_SECRET=secret_for_jwt
 PORT=3000
 ```
 
-## Running the Application
+
+## ▶️ Running the App (Locally)
 
 ```bash
 npm run start:dev
 ```
 
-The API will be available at `http://localhost:3000`.
+* Access the API at: `http://localhost:3000`
+  * Default user created by seeder : `admin@app.com` / `password`
+* Swagger Docs: `http://localhost:3000/api/docs`
 
 
-## API Documentation
+## 🐳 Run with Docker Compose (Recommended)
 
-Visit the Swagger UI at:
+You can easily launch the full environment (NestJS app, PostgreSQL, Redis, and pgAdmin) using Docker Compose:
 
+```bash
+docker compose up --build
 ```
-http://localhost:3000/api/docs
-```
 
-This documentation includes all available endpoints, request/response schemas, authentication mechanisms, and example requests.
+> Make sure Docker and the Docker Compose plugin are installed on your system.
+
+Once running:
+
+* API: [http://localhost:3000](http://localhost:3000)
+  * Default user created by seeder : `admin@app.com` / `password`
+* Swagger Docs: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+* pgAdmin: [http://localhost:5050](http://localhost:5050)
+
+  * Login: `admin@admin.com` / `admin`
+  * Add a new server: host = `postgres`, user = `nestuser`, password = `nestpass`
 
 
-## Modules Overview
+## 📦 Modules Overview
 
 ### CMS
 
-* Endpoints to create, read, update, and delete content.
-* Endpoints to create, read, update, and delete users.
-* DTOs include validation and Swagger decorators.
-* Permissions required for creating, editing, and deleting content.
+* Endpoints to manage content and users.
+* Role and permission-based access.
+* DTO validation and Swagger decorators.
 
 ### Discovery
 
-* Endpoint to search content with various filters and pagination.
-* Supports sorting and flexible query parameters.
-* Designed for high performance and scalability.
+* Search with flexible filters, pagination, and sorting.
+* Built for performance and scalability.
 
 ### Users & Permissions
 
-* User management endpoints with role and permission assignments.
-* Secure with JWT and permission guards.
+* CRUD for users and roles.
+* Protected by JWT and permission guards.
 
 ### Auth
 
-* Login endpoint returning JWT tokens.
-* Secure endpoints with JWT and roles.
+* Login endpoint returns JWT token.
+* JWT-based protection with role/permission checks.
 
 
-## Design & Architecture
+## 🧱 Design & Architecture
 
-* Follows **SOLID** principles with low coupling and clear module boundaries.
-* Uses NestJS Guards for authentication and authorization.
-* DTOs use `class-validator` for request validation.
-* Swagger decorators provide rich API documentation.
-* Scalable to serve millions of requests per hour with efficient database queries and caching.
-
-## Challenges & Notes
-
-* Handling scalability with minimal coupling between CMS and Discovery modules.
-* Balancing detailed Swagger documentation while keeping code clean.
-* Ensuring permission and role checks are granular and secure.
-* Designing flexible search DTOs to accommodate future filters without breaking the API.
-* For high traffic and large-scale search operations, consider integrating **Elasticsearch** or **OpenSearch** instead of relying solely on database queries.
-* While this project uses a monolithic structure for simplicity, adopting a **microservices architecture** is recommended if the system is expected to grow significantly — enabling independent scaling, better fault isolation, and modular development.
+* Clean module boundaries following **SOLID** principles.
+* DTOs validated via `class-validator`.
+* Authentication and authorization via NestJS Guards.
+* Swagger decorators for rich documentation.
+* Scalable architecture designed for high-traffic APIs.
+* Redis integration for caching and performance.
+* Easily extendable with external search systems like **Elasticsearch/OpenSearch**.
 
 
-## Contact
+## 🧩 Challenges & Notes
 
-Mustafa Elsir — \[mustafa@alg2mer.com](mailto:mustafa@alg2mer.com)
+* Decoupling CMS and Discovery logic while maintaining integration.
+* Balancing clean code with extensive Swagger documentation.
+* For heavy traffic and advanced search features, consider:
 
-Project Link: [https://github.com/alg2mer/content-api](https://github.com/alg2mer/content-api)
+  * **OpenSearch/Elasticsearch** for indexing.
+  * Migrating to **microservices** for horizontal scaling.
+
+
+## 📬 Contact
+
+**Mustafa Elsir**
+[mustafa@alg2mer.com](mailto:mustafa@alg2mer.com)
+
+**Project Link:** [https://github.com/alg2mer/content-api](https://github.com/alg2mer/content-api)
